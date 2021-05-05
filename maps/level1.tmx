@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="40" height="12" tilewidth="64" tileheight="64" infinite="0" nextlayerid="10" nextobjectid="75">
+ <editorsettings>
+  <export target="level1.lua" format="lua"/>
+ </editorsettings>
+ <tileset firstgid="1" name="platformer" tilewidth="64" tileheight="64" tilecount="9" columns="3">
+  <image source="tileset.png" width="192" height="192"/>
+ </tileset>
+ <tileset firstgid="10" name="Flag" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="flag.png" width="64" height="64"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="40" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,8,8,9,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,1,2,2,2,2,2,2,2,3,0,0,0,0,0,0,7,8,8,8,8,9,0,0,0,0,0,0,7,8,9,0,0,0,0,0,
+0,0,0,0,0,4,5,5,5,5,5,5,5,6,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,2,2,3,3,4,5,5,5,5,5,5,5,6,0,0,0,0,0,0,0,0,0,0,0,0,0,7,8,8,8,9,0,0,0,0,0,0,0,0,
+4,5,5,5,6,4,5,5,5,5,5,5,5,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+8,8,8,8,8,4,5,5,5,5,5,5,5,6,8,8,8,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,4,5,5,5,5,5,5,5,6,4,5,5,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,4,5,5,5,5,5,5,5,6,4,5,5,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="5" name="Flag">
+  <object id="43" x="2372.42" y="127.584" width="54.9096" height="58.1395" visible="0"/>
+ </objectgroup>
+ <objectgroup id="4" name="Enemies" tintcolor="#000000">
+  <object id="69" x="1083.66" y="511.951" width="61.3695" height="61.3695"/>
+  <object id="71" x="1983.2" y="382.752" width="61.3695" height="62.9845"/>
+  <object id="72" x="2239.99" y="130.814" width="61.3695" height="56.5245"/>
+ </objectgroup>
+ <objectgroup id="7" name="Coins">
+  <object id="51" x="897.933" y="190.568" width="54.9096" height="56.5245"/>
+  <object id="52" x="1027.13" y="130.814" width="53.2946" height="54.9096"/>
+  <object id="53" x="1159.56" y="132.429" width="51.6796" height="51.6796"/>
+  <object id="54" x="1280.68" y="187.339" width="58.1395" height="62.9845"/>
+  <object id="68" x="1728.04" y="190.568" width="59.7545" height="61.3695"/>
+ </objectgroup>
+ <objectgroup id="6" name="Start">
+  <object id="46" x="129.199" y="319.767" width="61.3695" height="61.3695"/>
+ </objectgroup>
+ <objectgroup id="3" name="Platforms">
+  <object id="26" x="1219.32" y="384.367" width="56.5245" height="51.6796"/>
+  <object id="28" x="2054.26" y="316.537" width="188.953" height="64.5995"/>
+  <object id="29" x="2243.22" y="187.339" width="253.553" height="62.9845"/>
+  <object id="38" x="4.84496" y="445.736" width="314.922" height="66.2145"/>
+  <object id="39" x="324.612" y="322.997" width="571.705" height="67.8295"/>
+  <object id="40" x="896.318" y="574.935" width="251.938" height="62.9845"/>
+  <object id="73" x="1275.84" y="322.997" width="385.982" height="54.9096"/>
+  <object id="74" x="1724.81" y="445.736" width="319.767" height="59.7545"/>
+ </objectgroup>
+</map>

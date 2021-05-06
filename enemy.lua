@@ -28,17 +28,17 @@ function updateEnemies(dt)
             if e:enter('Bullets') then   --Checking the collision // Need to add another collision class for the bullet
                    e.dead=true
                    score=score+10
-        
-                   elseif playerOnEnemy==true then 
+                end
+            
+            if playerOnEnemy==true then 
                    e.dead=true
                    score=score+10
+            end
 
-                   elseif player.isDead==true and e:enter('Player') then 
+                   if player.isDead==true and e:enter('Player') then 
                     e.dead=true
-
-                            
-
-               end
+                   end
+               
         
             
             

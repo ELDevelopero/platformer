@@ -22,7 +22,7 @@ function playerUpdate(dt)
     
         if player.body then 
             local colliders=world:queryRectangleArea(player:getX()-20, player:getY()+65,38,2, {'Platform'})
-            local collidersEnemy=world:queryRectangleArea(player:getX()-20, player:getY()+65,38,6 , {'Enemy'}) 
+            local collidersEnemy=world:queryRectangleArea(player:getX()-20, player:getY()+65,36,16 , {'Enemy'}) 
             if #colliders>0 then
                 player.grounded=true
                 else
@@ -32,7 +32,8 @@ function playerUpdate(dt)
             player.isMoving=false
 
                     if #collidersEnemy>0 then
-                        playerOnEnemy=true 
+                        playerOnEnemy=true
+                        player:applyLinearImpulse(0,-2000) 
                         else
                         playerOnEnemy=false
                     end
@@ -100,14 +101,13 @@ function playerUpdate(dt)
                 if player:enter('Enemy') and playerOnEnemy==true then 
                     
                     destroyEnemy()
-                    player:applyLinearImpulse(0,-2000)
+                                       
                     
-                    
-                end  
-
-                if playerOnEnemy==true then 
-                    
-                end
+                end 
+                
+                -- if playerOnEnemy==true then
+                --     player:applyLinearImpulse(0,-2000)
+                -- end
                     
                 if player:enter('Player') then
                 

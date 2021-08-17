@@ -1,6 +1,7 @@
-bullets={}
-bulletStartX=playerStartX
-bulletStartY=playerStartY
+bullets = {}
+bulletStartX = playerStartX
+bulletStartY = playerStartY
+--
 
 --function spawnBullet(x,y)
 --local bullet=world:newRectangleCollider(x,y, 64,64, {collision_class="Bullet"})
@@ -8,7 +9,6 @@ bulletStartY=playerStartY
 --bullet.animation=animations.bullet
 --table.insert(bullets,bullet)
 --end
-
 
 --[[function bulletDirection()
 local bx,by=player:getPosition()
@@ -20,71 +20,55 @@ local bx,by=player:getPosition()
         bullet=player:getDirection()*-1
 end
 end
-]]--
-
-
-
-function spawnBullet(x,y)
-    local bullet={}
-    bullet.x, bullet.y=player:getPosition()
+]] function spawnBullet(
+    x,
+    y)
+    local bullet = {}
+    bullet.x, bullet.y = player:getPosition()
     --bullet:setCollisionClass('Bullet')
-    bullet=world:newRectangleCollider(bullet.x,bullet.y, 20,20, {collision_class="Bullets"})
-    
-   -- bullet.y=player:getPosition()
-    bullet.speed=500
-    bullet.direction=player.direction 
-    bullet.dead=false
-    bullet.animation=animations.bullet
+    bullet = world:newRectangleCollider(bullet.x, bullet.y, 20, 20, {collision_class = "Bullets"})
+
+    -- bullet.y=player:getPosition()
+    bullet.speed = 500
+    bullet.direction = player.direction
+    bullet.dead = false
+    bullet.animation = animations.bullet
     bullet:setGravityScale(0)
-    table.insert(bullets,bullet)
-    
+    table.insert(bullets, bullet)
 end
 
-function drawBullets(dt)  --lucreaza
-
-    for i,b in ipairs(bullets) do
-        local bx,by =b:getPosition()
-        b.animation:draw(sprites.bullet,bx,by,nil,0.5,0.5,32,32) --32 32 is to move the collider rectangle in the middle of the object, it is half the image size
-        
-
+function drawBullets(dt) --lucreaza
+    for i, b in ipairs(bullets) do
+        local bx, by = b:getPosition()
+        b.animation:draw(sprites.bullet, bx, by, nil, 0.5, 0.5, 32, 32) --32 32 is to move the collider rectangle in the middle of the object, it is half the image size
     end
 end
 
-function bulletsUpdate(dt)  --makes the bullets to move into the right direction
-    
-        
-    for i,b in ipairs(bullets) do
-        local bx =b:getPosition()
-       -- b.x=b.x+(b.direction)*b.speed*dt  --direction of flying bullets, changes direction, based on the player direction.
-       b:setX(bx+b.speed*dt*b.direction) 
+function bulletsUpdate(dt) --makes the bullets to move into the right direction
+    for i, b in ipairs(bullets) do
+        local bx = b:getPosition()
+        -- b.x=b.x+(b.direction)*b.speed*dt  --direction of flying bullets, changes direction, based on the player direction.
+        b:setX(bx + b.speed * dt * b.direction)
         --b.y=b.y+(b.direction)*b.speed*dt
-     end
+    end
 
-    
-               
-        --contact:setEnabled(false)
-
-    
+    --contact:setEnabled(false)
 end
 
 function destroyBullets(dt)
-
-    for i=#bullets,1,-1 do
-        local b=bullets[i] --c stores the coin that is being touched only and not all of them
-        if b:enter('Enemy') then 
-        b:destroy() --destroys the collider and everything
-        table.remove(bullets,i)--removes from the list
-        --destroyEnemy()
-        
-        elseif b:enter('Platform') then
-        b:destroy() --destroys the collider and everything
-        table.remove(bullets,i) --removes from the list
-        
-        
+    for i = #bullets, 1, -1 do
+        local b = bullets[i] --c stores the coin that is being touched only and not all of them
+        if b:enter("Enemy") then
+            --removes from the list
+            --destroyEnemy()
+            b:destroy() --destroys the collider and everything
+            table.remove(bullets, i)
+        elseif b:enter("Platform") then
+            b:destroy() --destroys the collider and everything
+            table.remove(bullets, i) --removes from the list
         end
-
-     end
-end     
+    end
+end
 --[[
 function drawBullets()
 
@@ -148,4 +132,5 @@ function bulletsUpdate(dt)
     
 end
 
-]]--
+]]
+--

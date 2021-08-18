@@ -59,7 +59,7 @@ function playerUpdate(dt)
                     end
                     end ]]
             function love.keypressed(key)
-                if key == "space" then
+                if key == "space" and player.isDead == false then
                     spawnBullet(dt)
                 end
             end

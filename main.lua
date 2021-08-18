@@ -194,9 +194,9 @@ function loadMap(mapName)
         spawnEnemy(obj.x, obj.y)
     end
 
-    --for i, obj in pairs(gameMap.layers["Coins"].objects) do
-    --spawnCoin(obj.x,obj.y)
-    --end
+    for i, obj in pairs(gameMap.layers["Coins"].objects) do
+        spawnCoin(obj.x, obj.y)
+    end
 
     for i, obj in pairs(gameMap.layers["Flag"].objects) do
         flagX = obj.x

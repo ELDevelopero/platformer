@@ -9,9 +9,13 @@ function love.load()
     sounds = {}
     sounds.jump = love.audio.newSource("audio/jump.wav", "static")
     sounds.music = love.audio.newSource("audio/music.mp3", "stream")
+    sounds.enemyPop = love.audio.newSource("audio/enemyPop.mp3", "static")
+    sounds.coin = love.audio.newSource("audio/coin.mp3", "static")
+
     sounds.music:setLooping(true)
     sounds.music:setVolume(0.2)
     sounds.jump:setVolume(0.2)
+    sounds.enemyPop:setVolume(0.4)
     sounds.music:play()
     score = 0
     scoreLevel = 0

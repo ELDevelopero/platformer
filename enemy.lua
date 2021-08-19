@@ -1,4 +1,5 @@
 enemies = {}
+pop = 0
 
 function spawnEnemy(x, y)
     local enemy = world:newRectangleCollider(x, y, 70, 90, {collision_class = "Enemy"})
@@ -35,7 +36,6 @@ function updateEnemies(dt)
             if playerOnEnemy == true then
                 e.dead = true
                 score = score + 10
-                player:applyLinearImpulse(0, 2000)
             end
 
             if player.isDead == true and e:enter("Player") then
@@ -46,8 +46,8 @@ function updateEnemies(dt)
                 local e = enemies[i]
                 if e.dead == true then
                     e:destroy()
-
                     table.remove(enemies, i)
+                    sounds.enemyPop:play()
                 end
             end
         end

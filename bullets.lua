@@ -57,10 +57,10 @@ end
 
 function destroyBullets(dt)
     for i = #bullets, 1, -1 do
-        local b = bullets[i] --c stores the coin that is being touched only and not all of them
+        local b = bullets[i]
         if b:enter("Enemy") then
             --removes from the list
-            --destroyEnemy()
+            destroyEnemy()
             b:destroy() --destroys the collider and everything
             table.remove(bullets, i)
         elseif b:enter("Platform") then

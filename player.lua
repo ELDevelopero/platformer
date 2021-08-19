@@ -2,6 +2,7 @@ playerStartX = 360
 playerStartY = 100
 playerLife = 1
 deadTimer = 0
+pop = false
 
 player = world:newRectangleCollider(playerStartX, playerStartY, 40, 130, {collision_class = "Player"})
 player.body:setFixedRotation(true) --player not rotating when falling from the platform
@@ -26,8 +27,6 @@ function playerUpdate(dt)
 
         if #collidersEnemy > 0 then
             playerOnEnemy = true
-
-            player:applyLinearImpulse(0, -2000)
         else
             playerOnEnemy = false
         end
@@ -74,6 +73,7 @@ function playerUpdate(dt)
     end
 
     if player:enter("Enemy") and playerOnEnemy == true then
+        player:applyLinearImpulse(0, 2000)
         destroyEnemy()
     end
 

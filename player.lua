@@ -65,8 +65,9 @@ function playerUpdate(dt)
         end
     end
 
-    if player:enter("Danger") then
-        player:setPosition(playerStartX, playerStartY)
+    if player:enter("DangerZone") then
+        -- player:setPosition(playerStartX, playerStartY)
+        player.isDead = true
         score = scoreLevel
         coinsScore = coinsLevelScore
         loadMap(saveData.currentLevel)
@@ -103,10 +104,10 @@ function playerUpdate(dt)
         if player.isMoving == true then --and playerLife>0 then
             player.animation = animations.run
         elseif player.isDead == true then
-            --deadTimer=deadTimer+dt
+            -- sounds.playerDie:pause()
+            -- sounds.playerDie:play()
             player.animation = animations.dead
 
-            --if deadTimer>0.5 then
             gameState = 1
         else
             player.animation = animations.idle
@@ -114,6 +115,7 @@ function playerUpdate(dt)
     else
         player.animation = animations.jump
     end
+
     player.animation:update(dt) --needed to cycle the animation at the speed we set, next, we draw the animation
 end
 

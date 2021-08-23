@@ -1,31 +1,11 @@
 bullets = {}
 bulletStartX = playerStartX
 bulletStartY = playerStartY
---
 
---function spawnBullet(x,y)
---local bullet=world:newRectangleCollider(x,y, 64,64, {collision_class="Bullet"})
---bullet:setGravityScale(0)
---bullet.animation=animations.bullet
---table.insert(bullets,bullet)
---end
-
---[[function bulletDirection()
-local bx,by=player:getPosition()
-    if love.keyboard.isDown('right') then
-        bullet=player:getDirection()
-        
-    end
-    if love.keyboard.isDown('left') then
-        bullet=player:getDirection()*-1
-end
-end
-]] function spawnBullet(
-    x,
-    y)
+function spawnBullet(x, y)
     local bullet = {}
     bullet.x, bullet.y = player:getPosition()
-    --bullet:setCollisionClass('Bullet')
+    --bullet:setCollisionClass("Bullet")
     bullet = world:newRectangleCollider(bullet.x, bullet.y, 20, 20, {collision_class = "Bullets"})
 
     -- bullet.y=player:getPosition()
@@ -60,7 +40,7 @@ function destroyBullets(dt)
         local b = bullets[i]
         if b:enter("Enemy") then
             --removes from the list
-            destroyEnemy()
+            destroyEnemy(dt)
             b:destroy() --destroys the collider and everything
             table.remove(bullets, i)
         elseif b:enter("Platform") then

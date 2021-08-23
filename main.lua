@@ -10,11 +10,14 @@ function love.load()
     sounds.jump = love.audio.newSource("audio/jump.wav", "static")
     sounds.music = love.audio.newSource("audio/music.mp3", "stream")
     sounds.enemyPop = love.audio.newSource("audio/enemyPop.mp3", "static")
-    sounds.coin = love.audio.newSource("audio/coin.mp3", "static")
+    sounds.coin = love.audio.newSource("audio/coin.wav", "static")
+    sounds.playerDie = love.audio.newSource("audio/nextaDie.mp3", "static")
 
     sounds.music:setLooping(true)
     sounds.music:setVolume(0.2)
     sounds.jump:setVolume(0.2)
+    sounds.playerDie:setVolume(0.2)
+    sounds.coin:setVolume(0.1)
     sounds.enemyPop:setVolume(0.4)
     sounds.music:play()
     score = 0
@@ -64,7 +67,7 @@ function love.load()
     world:addCollisionClass("Player", {ignores = {"Player"}}) --Coins, being player collision class, are not interacting whit the player, when player jumps into them.
     world:addCollisionClass("Danger")
     world:addCollisionClass("Enemy")
-    world:addCollisionClass("IgnorePlatform", {ignores = {"Platform"}})
+    --world:addCollisionClass("IgnorePlatform", {ignores = {"Platform"}})
     world:addCollisionClass("Bullets", {ignores = {"Player"}}) --ignores Players in this case bullets can fly through player and coins.
     -- world:addCollisionClass('Ghost', {ignores = {'Solid'}})
     world:addCollisionClass("Top")
@@ -76,12 +79,13 @@ function love.load()
     require("bullets")
     require("gamestate")
 
-    dangerZone = world:newRectangleCollider(-500, 800, 5000, 50, {collision_class = "Danger"})
+    dangerZone = world:newRectangleCollider(-500, 2500, 10000, 50, {collision_class = "Danger"})
     dangerZone:setType("static")
     --topWorld = world:newRectangleCollider(-500, -100, 10000, 5, {collision_class = "Top"})
     --topWorld:setType("static")
 
     platforms = {}
+    danger = {}
     flagX = 0
     flagY = 0
     saveData = {}
@@ -130,7 +134,7 @@ function love.draw(dt)
     love.graphics.setFont(myFont)
     love.graphics.printf("Score: " .. score, 0, love.graphics.getHeight() - 750, love.graphics.getWidth(), "center")
     love.graphics.printf("Coins: " .. coinsScore, 0, love.graphics.getHeight() - 750, love.graphics.getWidth(), "left")
-    love.graphics.printf("Life: " .. playerLife, 0, love.graphics.getHeight() - 750, love.graphics.getWidth(), "right")
+    --love.graphics.printf("Life: " .. playerLife, 0, love.graphics.getHeight() - 750, love.graphics.getWidth(), "right")
     gameStateDraw(dt)
     cam:attach()
     gameMap:drawLayer(gameMap.layers["Tile Layer 1"])
@@ -145,9 +149,18 @@ function love.draw(dt)
 end
 
 function spawnPlatform(x, y, width, height)
-    local platform = world:newRectangleCollider(x, y, width, height, {collision_class = "Platform"})
-    platform:setType("static")
-    table.insert(platforms, platform)
+    if width > 0 and height > 0 then
+        local platform = world:newRectangleCollider(x, y, width, height, {collision_class = "Platform"})
+        platform:setType("static")
+        table.insert(platforms, platform)
+    end
+end
+function spawnPlatformDanger(x, y, width, height)
+    if width > 0 and height > 0 then
+        local dangered = world:newRectangleCollider(x, y, width, height, {collision_class = "DangerZone"})
+        dangered:setType("static")
+        table.insert(danger, dangered)
+    end
 end
 
 function destroyAll()
@@ -159,6 +172,16 @@ function destroyAll()
         table.remove(platforms, i)
         i = i - 1
     end
+
+    local i = #danger
+    while i > -1 do
+        if danger[i] ~= nil then
+            danger[i]:destroy() --once it is destroyed, we need to remove it from the table as well
+        end
+        table.remove(danger, i)
+        i = i - 1
+    end
+
     local i = #enemies
     while i > -1 do
         if enemies[i] ~= nil then
@@ -191,6 +214,10 @@ function loadMap(mapName)
     player:setPosition(playerStartX, playerStartY)
 
     for i, obj in pairs(gameMap.layers["Platforms"].objects) do
+        spawnPlatform(obj.x, obj.y, obj.width, obj.height)
+    end
+
+    for i, obj in pairs(gameMap.layers["DangerZone"].objects) do
         spawnPlatform(obj.x, obj.y, obj.width, obj.height)
     end
 

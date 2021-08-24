@@ -1,8 +1,6 @@
 playerStartX = 360
 playerStartY = 100
 playerLife = 1
-deadTimer = 0
-pop = false
 
 player = world:newRectangleCollider(playerStartX, playerStartY, 40, 130, {collision_class = "Player"})
 player.body:setFixedRotation(true) --player not rotating when falling from the platform
@@ -16,7 +14,8 @@ player.isDead = false
 function playerUpdate(dt)
     if player.body then
         local colliders = world:queryRectangleArea(player:getX() - 20, player:getY() + 65, 38, 2, {"Platform"})
-        local collidersEnemy = world:queryRectangleArea(player:getX() - 20, player:getY() + 65, 36, 16, {"Enemy"})
+        --local collidersEnemy = world:queryRectangleArea(player:getX() - 20, player:getY() + 75, 36, 4, {"Enemy"}) --to add jump on enemy to kill it, it works now, but it is too buggy
+        local collidersDanger = world:queryRectangleArea(player:getX() - 10, player:getY() + 65, 36, 4, {"DangerZone"})
         if #colliders > 0 then
             player.grounded = true
         else
@@ -25,10 +24,14 @@ function playerUpdate(dt)
 
         player.isMoving = false
 
-        if #collidersEnemy > 0 then
-            playerOnEnemy = true
-        else
-            playerOnEnemy = false
+        -- if #collidersEnemy > 0 then
+        --     playerOnEnemy = true
+        -- else
+        --     playerOnEnemy = false
+        -- end
+
+        if #collidersDanger > 0 then
+            player.grounded = true
         end
 
         local px, py = player:getPosition()
@@ -46,17 +49,10 @@ function playerUpdate(dt)
             end
 
             if love.keyboard.isDown("up") and player.isDead == false and player.grounded then
-                player:applyLinearImpulse(0, -6000)
+                player:applyLinearImpulse(0, -6500)
                 sounds.jump:play()
             end
-            --[[ function love.keypressed(key )  ---Aici sa ma uit ca nu imi place
-                    if key=='up' then
-                    if player.grounded then
-                    player:applyLinearImpulse(0,-9000)
-                    sounds.jump:play() 
-                
-                    end
-                    end ]]
+
             function love.keypressed(key)
                 if key == "space" and player.isDead == false then
                     spawnBullet(dt)
@@ -68,28 +64,30 @@ function playerUpdate(dt)
     if player:enter("DangerZone") then
         -- player:setPosition(playerStartX, playerStartY)
         player.isDead = true
-        score = scoreLevel
-        coinsScore = coinsLevelScore
-        loadMap(saveData.currentLevel)
+    -- score = scoreLevel
+    -- coinsScore = coinsLevelScore
     end
 
-    if player:enter("Enemy") and playerOnEnemy == true then
-        player:applyLinearImpulse(0, 2000)
-        destroyEnemy()
-    end
-
-    -- if playerOnEnemy==true then
-    --     player:applyLinearImpulse(0,-2000)
+    -- if player:enter("Enemy") and playerOnEnemy == true then
+    --     player:applyLinearImpulse(0, 2000)
+    --     player.isDead = true
+    -- destroyEnemy()
     -- end
 
     if player:enter("Player") then --Coins were given player collision class
         destroyCoins()
     end
 
-    if player:enter("Enemy") and playerOnEnemy == false then --and playerLife<1 then
+    -- if player:enter("Enemy") and playerOnEnemy == false then --and playerLife<1 then
+    --     player.isDead = true
+
+    --     destroyEnemy()
+
+    if player:enter("Enemy") then --and playerLife<1 then
         player.isDead = true
 
         destroyEnemy()
+        gameState = 1
 
     --player:applyLinearImpulse(-2000,0)
     --player:setPosition(playerStartX,playerStartY)

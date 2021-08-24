@@ -1,5 +1,4 @@
 enemies = {}
-pop = 0
 
 function spawnEnemy(x, y)
     local enemy = world:newRectangleCollider(x, y, 70, 90, {collision_class = "Enemy"})
@@ -28,29 +27,38 @@ function updateEnemies(dt)
             for i, e in ipairs(enemies) do
                 -- if e:enter("Bullets") then
                 --     e.dead = true
-
                 --     score = score + 10
                 -- end
-
                 if playerOnEnemy == true then
                     e.dead = true
                     score = score + 10
+                    e:destroy()
+                    table.remove(enemies, i)
+                    sounds.enemyPop:play()
                 end
-
-                if player.isDead == true and e:enter("Player") then
-                    e.dead = true
-                end
+                -- if player.isDead == true and e:enter("Player") then
+                --     e.dead = true
+                -- end
             end
 
             for i = #enemies, 1, -1 do --Removing enemies at the collision with the bullets. To solve the bug of all enemies dissapearing if the first one not killed, all the logics needs to be here.
                 local e = enemies[i]
-                if e.dead == true or e:enter("Bullets") then
+                if e:enter("Bullets") or e:enter("Player") then
                     score = score + 10
 
                     e:destroy()
                     table.remove(enemies, i)
                     sounds.enemyPop:play()
                 end
+                -- if e.dead == true then
+                --     e:destroy()
+                --     table.remove(enemies, i)
+                --     sounds.enemyPop:play()
+                -- end
+
+                -- if player.isDead == true and e:enter("Player") then
+                --     e.dead = true
+                -- end
             end
         end
     end

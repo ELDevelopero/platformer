@@ -23,8 +23,8 @@ function gameStateUpdate(dt)
         --player:setPosition(playerStartX,playerStartY)
         --player.grounded=true
 
-        --score=scoreLevel
-        --coinsScore=coinsLevelScore
+        score = 0
+        coinsScore = 0
         --playerLife=1
         player.isDead = false
 

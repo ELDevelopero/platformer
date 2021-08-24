@@ -27,12 +27,3 @@ function destroyCoins(dt)
         end
     end
 end
-
---local i=#coins
---while i > 0 do
-
--- coins[i]:destroy() --once it is destroyed, we need to remove it from the table as well
-
---table.remove(coins,i)
-
---end

@@ -65,7 +65,7 @@ function love.load()
     world:setQueryDebugDrawing(true) --see the query when we click the mouse
     world:addCollisionClass("Platform")
     world:addCollisionClass("Player", {ignores = {"Player"}}) --Coins, being player collision class, are not interacting whit the player, when player jumps into them.
-    world:addCollisionClass("Danger")
+    world:addCollisionClass("DangerZone")
     world:addCollisionClass("Enemy")
     --world:addCollisionClass("IgnorePlatform", {ignores = {"Platform"}})
     world:addCollisionClass("Bullets", {ignores = {"Player"}}) --ignores Players in this case bullets can fly through player and coins.
@@ -79,8 +79,8 @@ function love.load()
     require("bullets")
     require("gamestate")
 
-    dangerZone = world:newRectangleCollider(-500, 2500, 10000, 50, {collision_class = "Danger"})
-    dangerZone:setType("static")
+    -- dangerZone = world:newRectangleCollider(-500, 2500, 10000, 50, {collision_class = "Danger"})
+    -- dangerZone:setType("static")
     --topWorld = world:newRectangleCollider(-500, -100, 10000, 5, {collision_class = "Top"})
     --topWorld:setType("static")
 
@@ -118,8 +118,8 @@ function love.update(dt)
     local colliders = world:queryCircleArea(flagX, flagY, 10, {"Player"})
     if #colliders > 0 then
         score = score + 100
-        scoreLevel = score
-        coinsLevelScore = coinsScore
+        -- scoreLevel = score
+        -- coinsLevelScore = coinsScore
 
         if saveData.currentLevel == "level1" then
             loadMap("level2")
@@ -218,7 +218,7 @@ function loadMap(mapName)
     end
 
     for i, obj in pairs(gameMap.layers["DangerZone"].objects) do
-        spawnPlatform(obj.x, obj.y, obj.width, obj.height)
+        spawnPlatformDanger(obj.x, obj.y, obj.width, obj.height)
     end
 
     for i, obj in pairs(gameMap.layers["Enemies"].objects) do

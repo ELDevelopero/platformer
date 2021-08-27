@@ -29,6 +29,6 @@ function gameStateUpdate(dt)
         player.isDead = false
 
         love.event.quit("restart")
-        loadMap(saveData.currentLevel)
+        loadMap(saveData.currentLevel, saveData.currentBackground)
     end
 end

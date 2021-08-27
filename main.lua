@@ -25,6 +25,7 @@ function love.load()
     coinsScore = 0
     coinsLevelScore = 0
     gameState = 2
+    level = 0
 
     sprites = {}
     --sprites.playerSheet=love.graphics.newImage('sprites/playerSheet.png')
@@ -34,7 +35,8 @@ function love.load()
     sprites.dead = love.graphics.newImage("sprites/dead.png")
 
     sprites.enemySheet = love.graphics.newImage("sprites/enemySheet.png")
-    sprites.background = love.graphics.newImage("sprites/BackgroundLevel1.png")
+    sprites.background = love.graphics.newImage("sprites/background.png")
+    sprites.background2 = love.graphics.newImage("sprites/BackgroundLevel2.png")
     sprites.coin = love.graphics.newImage("sprites/coin.png")
     sprites.bullet = love.graphics.newImage("sprites/bullet.png")
 
@@ -44,7 +46,7 @@ function love.load()
     local grid3 = anim8.newGrid(605, 604, sprites.dead:getWidth(), sprites.dead:getHeight())
     local grid4 = anim8.newGrid(623, 604, sprites.slideAndShoot:getWidth(), sprites.slideAndShoot:getHeight())
     local enemyGrid = anim8.newGrid(100, 79, sprites.enemySheet:getWidth(), sprites.enemySheet:getHeight())
-    local coinGrid = anim8.newGrid(64, 64, sprites.coin:getWidth(), sprites.coin:getHeight())
+    local coinGrid = anim8.newGrid(32, 32, sprites.coin:getWidth(), sprites.coin:getHeight())
     local bulletGrid = anim8.newGrid(64, 64, sprites.bullet:getWidth(), sprites.bullet:getHeight())
 
     animations = {}
@@ -66,7 +68,7 @@ function love.load()
     world:addCollisionClass("Platform")
     world:addCollisionClass("Player", {ignores = {"Player"}}) --Coins, being player collision class, are not interacting whit the player, when player jumps into them.
     world:addCollisionClass("DangerZone")
-    world:addCollisionClass("Enemy")
+    world:addCollisionClass("Enemy", {ignores = {"DangerZone", "Enemy"}})
     --world:addCollisionClass("IgnorePlatform", {ignores = {"Platform"}})
     world:addCollisionClass("Bullets", {ignores = {"Player"}}) --ignores Players in this case bullets can fly through player and coins.
     -- world:addCollisionClass('Ghost', {ignores = {'Solid'}})
@@ -90,13 +92,20 @@ function love.load()
     flagY = 0
     saveData = {}
     saveData.currentLevel = "level1"
+    saveData.currentBackground = "background1"
+
+    -- if saveData.currentLevel == "level1" then
+    --     background = 1
+    -- elseif saveData.currentLevel == "level2" then
+    --     background = 2
+    -- end
 
     if love.filesystem.getInfo("dataSave.lua") then
         local data = love.filesystem.load("dataSave.lua")
         data()
     end
 
-    loadMap(saveData.currentLevel)
+    loadMap(saveData.currentLevel, saveData.currentBackground)
 end
 
 function love.update(dt)
@@ -123,18 +132,27 @@ function love.update(dt)
 
         if saveData.currentLevel == "level1" then
             loadMap("level2")
+            background = 2
+            level = 2
         elseif saveData.currentLevel == "level2" then
+            loadMap("level3") --we can have here level3, 4 etc.
+            background = 1
+            level = 1
+        elseif saveData.currentLevel == "level3" then
             loadMap("level1") --we can have here level3, 4 etc.
+            background = 1
+            level = 1
         end
     end
 end
 
 function love.draw(dt)
     love.graphics.draw(sprites.background, 0, 0)
+
     love.graphics.setFont(myFont)
     love.graphics.printf("Score: " .. score, 0, love.graphics.getHeight() - 750, love.graphics.getWidth(), "center")
     love.graphics.printf("Coins: " .. coinsScore, 0, love.graphics.getHeight() - 750, love.graphics.getWidth(), "left")
-    --love.graphics.printf("Life: " .. playerLife, 0, love.graphics.getHeight() - 750, love.graphics.getWidth(), "right")
+    --love.graphics.printf("Level: " .. level, 0, love.graphics.getHeight() - 750, love.graphics.getWidth(), "right")
     gameStateDraw(dt)
     cam:attach()
     gameMap:drawLayer(gameMap.layers["Tile Layer 1"])
@@ -200,8 +218,10 @@ function destroyAll()
         c = c - 1
     end
 end
-function loadMap(mapName)
+function loadMap(mapName, backgroundPic)
     saveData.currentLevel = mapName
+    saveData.currentBackground = backgroundPic
+
     love.filesystem.write("dataSave.lua", table.show(saveData, "saveData"))
 
     destroyAll()

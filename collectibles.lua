@@ -1,7 +1,7 @@
 coins = {}
 
 function spawnCoin(x, y)
-    local coin = world:newRectangleCollider(x, y, 64, 64, {collision_class = "Player"})
+    local coin = world:newRectangleCollider(x, y, 32, 32, {collision_class = "Player"})
     coin:setGravityScale(0)
     coin.animation = animations.coin
     table.insert(coins, coin)
@@ -10,7 +10,7 @@ end
 function drawCoins(dt)
     for i, c in ipairs(coins) do
         local cx, cy = c:getPosition()
-        c.animation:draw(sprites.coin, cx, cy, nil, nil, nil, 32, 32) --32 32 is to move the collider rectangle in the middle of the object, it is half the image size
+        c.animation:draw(sprites.coin, cx, cy, nil, nil, nil, 16, 16) --32 32 is to move the collider rectangle in the middle of the object, it is half the image size
     end
 end
 function destroyCoins(dt)

@@ -1,5 +1,5 @@
 function love.load()
-    love.window.setMode(1000, 768)
+    --love.window.setMode(1000, 768)
     anim8 = require "libraries/anim8/anim8"
     sti = require "libraries/Simple-Tiled-Implementation/sti"
     cameraFile = require "libraries/hump/camera"
@@ -25,7 +25,7 @@ function love.load()
     coinsScore = 0
     coinsLevelScore = 0
     gameState = 2
-    level = 0
+    level = 1
 
     sprites = {}
     --sprites.playerSheet=love.graphics.newImage('sprites/playerSheet.png')
@@ -132,7 +132,7 @@ function love.update(dt)
         elseif saveData.currentLevel == "level2" then
             loadMap("level3") --we can have here level3, 4 etc.
             background = 1
-            level = 1
+            level = 3
         elseif saveData.currentLevel == "level3" then
             loadMap("level1") 
             background = 1
@@ -151,7 +151,7 @@ function love.draw(dt)
     gameStateDraw(dt)
     cam:attach()
     gameMap:drawLayer(gameMap.layers["Tile Layer 1"])
-   -- world:draw(dt)
+   --world:draw(dt)
 
     drawPlayer(dt)
     drawEnemies(dt)
@@ -213,9 +213,8 @@ function destroyAll()
         c = c - 1
     end
 end
-function loadMap(mapName, backgroundPic)
+function loadMap(mapName)
     saveData.currentLevel = mapName
-    saveData.currentBackground = backgroundPic
 
     love.filesystem.write("dataSave.lua", table.show(saveData, "saveData"))
 

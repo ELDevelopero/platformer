@@ -64,7 +64,7 @@ function love.load()
 
     wf = require "libraries/windfield/windfield"
     world = wf.newWorld(0, 800, false) --x,y directions gravity
-    world:setQueryDebugDrawing(true) --see the query when we click the mouse
+    world:setQueryDebugDrawing(false) --see the query when we click the mouse
     world:addCollisionClass("Platform")
     world:addCollisionClass("Player", {ignores = {"Player"}}) --Coins, being player collision class, are not interacting whit the player, when player jumps into them.
     world:addCollisionClass("DangerZone")
@@ -80,11 +80,6 @@ function love.load()
     require("collectibles")
     require("bullets")
     require("gamestate")
-
-    -- dangerZone = world:newRectangleCollider(-500, 2500, 10000, 50, {collision_class = "Danger"})
-    -- dangerZone:setType("static")
-    --topWorld = world:newRectangleCollider(-500, -100, 10000, 5, {collision_class = "Top"})
-    --topWorld:setType("static")
 
     platforms = {}
     danger = {}
@@ -105,7 +100,7 @@ function love.load()
         data()
     end
 
-    loadMap(saveData.currentLevel, saveData.currentBackground)
+    loadMap(saveData.currentLevel)
 end
 
 function love.update(dt)
@@ -139,7 +134,7 @@ function love.update(dt)
             background = 1
             level = 1
         elseif saveData.currentLevel == "level3" then
-            loadMap("level1") --we can have here level3, 4 etc.
+            loadMap("level1") 
             background = 1
             level = 1
         end
@@ -156,7 +151,7 @@ function love.draw(dt)
     gameStateDraw(dt)
     cam:attach()
     gameMap:drawLayer(gameMap.layers["Tile Layer 1"])
-    world:draw(dt)
+   -- world:draw(dt)
 
     drawPlayer(dt)
     drawEnemies(dt)

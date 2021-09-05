@@ -66,8 +66,8 @@
   <object id="70" x="1024.69" y="194.593" width="61.5799" height="54.1903"/>
   <object id="71" x="897.835" y="71.4327" width="61.5799" height="54.1903"/>
   <object id="73" x="1156.47" y="73.8959" width="61.5799" height="54.1903"/>
-  <object id="74" x="1023.46" y="325.142" width="61.5799" height="54.1903"/>
-  <object id="75" x="1161.4" y="317.752" width="61.5799" height="54.1903"/>
+  <object id="74" x="1025.46" y="322.142" width="58.5799" height="40.1903"/>
+  <object id="75" x="1153.4" y="316.752" width="60.5799" height="47.1903"/>
   <object id="76" x="1284.56" y="315.289" width="61.5799" height="54.1903"/>
  </objectgroup>
  <objectgroup id="4" name="Enemies">

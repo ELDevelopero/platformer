@@ -4,7 +4,7 @@ function gameStateDraw(dt)
         love.graphics.printf(
             "Click anywhere to begin",
             0,
-            love.graphics.getHeight() - 500,
+            love.graphics.getHeight() - 700,
             love.graphics.getWidth(),
             "center"
         )

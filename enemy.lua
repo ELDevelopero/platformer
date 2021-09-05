@@ -48,6 +48,7 @@ function updateEnemies(dt)
 
                     e:destroy()
                     table.remove(enemies, i)
+                    sounds.enemyPop:stop()
                     sounds.enemyPop:play()
                 end
                 -- if e.dead == true then

@@ -8,7 +8,7 @@ function love.load()
     myFont = love.graphics.newFont(30)
     sounds = {}
     sounds.jump = love.audio.newSource("audio/jump.wav", "static")
-    sounds.music = love.audio.newSource("audio/music.mp3", "stream")
+    sounds.music = love.audio.newSource("audio/music.mp3", "static") --changed from stream to static to use with love.js
     sounds.enemyPop = love.audio.newSource("audio/enemyPop.mp3", "static")
     sounds.coin = love.audio.newSource("audio/coin.wav", "static")
     sounds.playerDie = love.audio.newSource("audio/nextaDie.mp3", "static")
